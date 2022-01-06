@@ -28,7 +28,7 @@ type galileoParsePacket struct {
 func (g galileoParsePacket) Save() error {
 	result, err := json.MarshalIndent(g, " ", " ")
 	if err != nil {
-		return fmt.Errorf("Ошибка парсинга данных: %v", err)
+		return fmt.Errorf("Data parsing error: %v", err)
 	}
 
 	fmt.Println(string(result))
@@ -37,7 +37,7 @@ func (g galileoParsePacket) Save() error {
 	resp, err := http.Post("https://tracking.gypsick.com/api/v1/log", "application/json", responseBody)  
 
 	if err != nil {
-		return fmt.Errorf("Ошибка парсинга данных: %v", err)
+		return fmt.Errorf("Data parsing error: %v", err)
 	}
 	defer resp.Body.Close()
 	return err
