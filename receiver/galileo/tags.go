@@ -28,11 +28,11 @@ func (t *tag) SetValue(tagType string, val []byte) error {
 	case "bitstring":
 		v = &BitsTag{}
 	default:
-		return fmt.Errorf("Неизвестный тип данных: %s. Значение: %x", tagType, val)
+		return fmt.Errorf("Unknown data type: %s. Meaning: %x", tagType, val)
 	}
 
 	if v == nil {
-		return fmt.Errorf("Некорректный указатель тэга")
+		return fmt.Errorf("Invalid tag pointer")
 	}
 
 	if err := v.Parse(val); err != nil {

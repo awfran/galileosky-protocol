@@ -32,7 +32,7 @@ func handleRecvPkg(conn net.Conn, ttl time.Duration) {
 
 			// если пакет не егтс формата закрываем соединение
 			if headerBuf[0] != 0x01 {
-				logger.Warnf("Пакет не соответствует формату Galileo. Закрыто соедиение %s", conn.RemoteAddr())
+				logger.Warnf("The package does not conform to the Galileo format. Closed connection%s", conn.RemoteAddr())
 				return
 			}
 
@@ -45,7 +45,7 @@ func handleRecvPkg(conn net.Conn, ttl time.Duration) {
 			// получаем концовку пакета
 			buf := make([]byte, pkgLen)
 			if _, err := io.ReadFull(conn, buf); err != nil {
-				logger.Errorf("Ошибка при получении тела пакета: %v", err)
+				logger.Errorf("Error while getting the package body: %v", err)
 				return
 			}
 
@@ -54,17 +54,17 @@ func handleRecvPkg(conn net.Conn, ttl time.Duration) {
 		case io.EOF:
 			<-connTimer.C
 			_ = conn.Close()
-			logger.Warnf("Соединение %s закрыто по таймауту", conn.RemoteAddr())
+			logger.Warnf("Compound %s closed by timeout", conn.RemoteAddr())
 			return
 		default:
-			logger.Errorf("Ошибка при получении: %v", err)
+			logger.Errorf("Error while getting: %v", err)
 			return
 		}
 
-		logger.Debugf("Принят пакет: %X", recvPacket)
+		logger.Debugf("Package accepted: %X", recvPacket)
 		pkg := galileo.Packet{}
 		if err := pkg.Decode(recvPacket); err != nil {
-			logger.Warn("Ошибка расшифровки пакета")
+			logger.Warn("Package decryption error ")
 			logger.Error(err)
 			return
 		}
@@ -75,7 +75,7 @@ func handleRecvPkg(conn net.Conn, ttl time.Duration) {
 		resp := append([]byte{0x02}, crc...)
 
 		if _, err = conn.Write(resp); err != nil {
-			logger.Errorf("Ошибка отправки пакета подтверждения: %v", err)
+			logger.Errorf("Error sending confirmation packet: %v", err)
 		}
 
 		if len(pkg.Tags) < 1 {

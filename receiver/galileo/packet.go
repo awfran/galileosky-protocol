@@ -26,25 +26,25 @@ func (g *Packet) Decode(pkg []byte) error {
 	g.Crc16 = binary.LittleEndian.Uint16(pkg[paketBodyLen:])
 
 	if crc16(pkg[:paketBodyLen]) != g.Crc16 {
-		return fmt.Errorf("Crc пакета не совпадает")
+		return fmt.Errorf("Crc of the packet does not match")
 	}
 
 	buf := bytes.NewReader(pkg[:paketBodyLen])
 
 	if g.Header, err = buf.ReadByte(); err != nil {
-		return fmt.Errorf("Ошибка чтения залоговка пакета: %v", err)
+		return fmt.Errorf("Error reading package preface:%v", err)
 	}
 
 	lenBytes := make([]byte, 2)
 	if _, err = buf.Read(lenBytes); err != nil {
-		return fmt.Errorf("Ошибка чтения длины пакета: %v", err)
+		return fmt.Errorf("Error reading packet length: %v", err)
 	}
 
 	g.Length = binary.LittleEndian.Uint16(lenBytes)
 
 	lenBits := strconv.FormatUint(uint64(g.Length), 2)
 	if len(lenBits) < 1 {
-		return fmt.Errorf("Не корректная длина пакета: %v", err)
+		return fmt.Errorf("Incorrect packet length: %v", err)
 	}
 
 	if lenBits[:1] == "1" {
@@ -55,20 +55,20 @@ func (g *Packet) Decode(pkg []byte) error {
 	for buf.Len() > 0 {
 		t := tag{}
 		if t.Tag, err = buf.ReadByte(); err != nil {
-			return fmt.Errorf("Ошибка чтения тэга: %v", err)
+			return fmt.Errorf("Tag read error:%v", err)
 		}
 
 		if tagInfo, ok := tagsTable[t.Tag]; ok {
 			tagVal := make([]byte, tagInfo.Len)
 			if _, err := buf.Read(tagVal); err != nil {
-				return fmt.Errorf("Не удалось считать значение тега %x: %v", t.Tag, err)
+				return fmt.Errorf("Failed to read tag value %x:%v", t.Tag, err)
 			}
 			if err := t.SetValue(tagInfo.Type, tagVal); err != nil {
 				return err
 			}
 			g.Tags = append(g.Tags, t)
 		} else {
-			return fmt.Errorf("Не найдена информаци по тегу %x", t.Tag)
+			return fmt.Errorf("No tag information found %x", t.Tag)
 		}
 
 	}

@@ -65,7 +65,7 @@ type CoordTag struct {
 //Parse заполняет значение тэга
 func (c *CoordTag) Parse(val []byte) error {
 	if len(val) != 9 {
-		return fmt.Errorf(" Некорректная длин секции координат : %x", val)
+		return fmt.Errorf(" Incorrect coordinate section lengths: %x", val)
 	}
 
 	flgByte := val[0]
@@ -88,7 +88,7 @@ type SpeedTag struct {
 //Parse заполняет значение тэга
 func (s *SpeedTag) Parse(val []byte) error {
 	if len(val) != 4 {
-		return fmt.Errorf(" Некорректная длин секции скорости : %x", val)
+		return fmt.Errorf(" Incorrect speed section lengths:%x", val)
 	}
 
 	s.Speed = float64(binary.LittleEndian.Uint16(val[:2])) / 10
@@ -109,7 +109,7 @@ func (u *IntTag) Parse(val []byte) error {
 	case size == 2:
 		u.Val = int(binary.LittleEndian.Uint16(val))
 	default:
-		return fmt.Errorf("Входной массив больше 2 байт: %x", val)
+		return fmt.Errorf("Input array is more than 2 bytes: %x", val)
 	}
 
 	return nil
@@ -129,7 +129,7 @@ func (b *BitsTag) Parse(val []byte) error {
 	case size == 2:
 		b.Val = fmt.Sprintf("%016b", binary.LittleEndian.Uint16(val))
 	default:
-		return fmt.Errorf("Входной массив больше 2 байт: %x", val)
+		return fmt.Errorf("Input array is more than 2 bytes: %x", val)
 	}
 
 	return nil

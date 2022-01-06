@@ -6,79 +6,80 @@ type tagDesc struct {
 }
 
 var tagsTable = map[byte]tagDesc{
-	// версия железа
+	// iron version
 	0x01: {1, "uint"},
-	// версия прошивки
+	// firmware version
 	0x02: {1, "uint"},
 	// IMEI
 	0x03: {15, "string"},
-	// идентификатор устройства
+	// device id
 	0x04: {2, "uint"},
-	// номер записи в архиве
+	// archive record number
 	0x10: {2, "uint"},
 	// Дата и время
 	0x20: {4, "time"},
-	// Координаты в градусах, число спутников,
-	// признак корректности определения координат и
-	// источник координат
+	// Coordinates in degrees, number of satellites,
+	// the sign of the correctness of the determination of coordinates and
+	// coordinate source
 	0x30: {9, "coord"},
-	// Скорость в км/ч направлене в градусах
+	// Speed ​​in km / h is directed in degrees
 	0x33: {4, "speed"},
-	// высота, м.
+	// height, m.
 	0x34: {2, "int"},
-	// Одно из значений: 1. HDOP (делить на 10) - если истоник координат GPS
-	// модуль, 2 погрешность в метрах если источник gsm-сети (умножить на 10)
+	// One of the values: 1. HDOP (divided by 10) - if the source of GPS coordinates
+	// module, 2 error in meters if the source of the gsm network (multiply by 10)
 	0x35: {1, "uint"},
-	// Статус устройства
+	// Device status
 	0x40: {2, "bitstring"},
-	// Напряжение питания, мВ
+	// Supply voltage, mV
 	0x41: {2, "uint"},
-	// Напряжение аккумулятора, мВ
+	// Battery voltage, mV
 	0x42: {2, "uint"},
-	// Статусы входов
+	// Input statuses
 	0x45: {2, "bitstring"},
-	// Статусы выходов
-	0x46: {2, "bitstring"},
-	// Значение на входе 0.
-	// В зависимости от настроек один из вариантов: напряжение,
-	// число импульсов, частота Гц
+	// Output statuses
+	0x46: {2, "bitstring"},	
+	// The value at the input is 0.
+	// Depending on the settings, one of the options: voltage,
+	// number of pulses, frequency Hz
 	0x50: {2, "uint"},
-	// Значение на входе 1.
-	// В зависимости от настроек один из вариантов: напряжение,
-	// число импульсов, частота Гц
+	// Value at input 1.
+	// Depending on the settings, one of the options: voltage,
+	// number of pulses, frequency Hz
 	0x51: {2, "uint"},
-	// Значение на входе 2.
-	// В зависимости от настроек один из вариантов: напряжение,
-	// число импульсов, частота Гц
+	// Value at input 2.
+	// Depending on the settings, one of the options: voltage,
+	// number of pulses, frequency Hz
 	0x52: {2, "uint"},
-	// Значение на входе 3.
-	// В зависимости от настроек один из вариантов: напряжение,
-	// число импульсов, частота Гц
+	// Value at input 3.
+// Depending on the settings, one of the options: voltage,
+// number of pulses, frequency Hz	
 	0x53: {2, "uint"},
-	// Значение на входе 4.
-	// В зависимости от настроек один из вариантов: напряжение,
-	// число импульсов, частота Гц
+
+// Value at input 4.
+// Depending on the settings, one of the options: voltage,
+// number of pulses, frequency Hz
 	0x54: {2, "uint"},
-	// Значение на входе 5.
-	// В зависимости от настроек один из вариантов: напряжение,
-	// число импульсов, частота Гц
+// Value at input 5.
+// Depending on the settings, one of the options: voltage,
+// number of pulses, frequency Hz
 	0x55: {2, "uint"},
-	// Значение на входе 6.
-	// В зависимости от настроек один из вариантов: напряжение,
-	// число импульсов, частота Гц
+	// Value at input 6.
+// Depending on the settings, one of the options: voltage,
+// number of pulses, frequency Hz
 	0x56: {2, "uint"},
-	// Значение на входе 7.
-	// В зависимости от настроек один из вариантов: напряжение,
-	// число импульсов, частота Гц
+// Value at input 7.
+// Depending on the settings, one of the options: voltage,
+// number of pulses, frequency Hz
 	0x57: {2, "uint"},
-	// RS485[0] ДУТ с адресом 0
+	// RS485 [0] FLS with address 0
 	0x60: {2, "uint"},
 	// RS485[1] ДУТ с адресом 1
 	0x61: {2, "uint"},
 	// RS485[2] ДУТ с адресом 2
 	0x62: {2, "uint"},
-	//// RS485[3] ДУТ с адресом 2
+	// RS485 [1] FLS with address 1
 	//0x63: {2, "uint"},
-	//// RS485[4] ДУТ с адресом 2
+	//// RS485 [4] FLS with address 2
 	//0x64: {2, "uint"},
 }

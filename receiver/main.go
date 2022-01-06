@@ -19,10 +19,10 @@ func main() {
 
 	if len(os.Args) == 2 {
 		if err := config.Load(os.Args[1]); err != nil {
-			logger.Fatalf("Ошибка парсинга конфига: %v", err)
+			logger.Fatalf("Config parsing error: %v", err)
 		}
 	} else {
-		logger.Fatalf("Не задан путь до конфига")
+		logger.Fatalf("The path to the config is not specified")
 	}
 	logger.SetLevel(config.getLogLevel())
 
@@ -32,15 +32,15 @@ func main() {
 func runServer(srvAddress string, conTTL time.Duration) {
 	l, err := net.Listen("tcp", srvAddress)
 	if err != nil {
-		logger.Fatalf("Не удалось открыть соединение: %v", err)
+		logger.Fatalf("Failed to open connection: %v", err)
 	}
 	defer l.Close()
 
-	logger.Infof("Запущен сервер %s...", srvAddress)
+	logger.Infof("Server started %s...", srvAddress)
 	for {
 		conn, err := l.Accept()
 		if err != nil {
-			logger.Errorf("Ошибка соединения: %v", err)
+			logger.Errorf("Connection error: %v", err)
 		} else {
 			go handleRecvPkg(conn, conTTL)
 		}

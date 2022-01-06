@@ -21,7 +21,7 @@ type settings struct {
 
 func (c *settings) Load(confPath string) error {
 	if _, err := toml.DecodeFile(confPath, c); err != nil {
-		return fmt.Errorf("Ошибка разбора файла настроек: %v", err)
+		return fmt.Errorf("Settings file parsing error: %v", err)
 	}
 
 	return nil
