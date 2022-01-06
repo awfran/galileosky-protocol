@@ -39,7 +39,7 @@ func (g galileoParsePacket) Save() error {
 	if err != nil {
 		return fmt.Errorf("Ошибка парсинга данных: %v", err)
 	}
-
+	defer resp.Body.Close()
 	return err
 }
 
