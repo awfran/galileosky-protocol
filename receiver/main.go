@@ -4,8 +4,7 @@ import (
 	"net"
 	"os"
 	"time"
-
-	"github.com/labstack/gommon/log"
+	//"github.com/labstack/gommon/log"
 )
 
 var (
