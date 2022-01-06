@@ -36,6 +36,6 @@ func TestServer(t *testing.T) {
 	_, _ = conn.Read(buf)
 
 	if !bytes.Equal(buf, response) {
-		t.Errorf("Ответне совпадает: %X != %X ", buf, response)
+		t.Errorf("The answer does not match: %X != %X ", buf, response)
 	}
 }
