@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
 )
 
 type galileoParsePacket struct {
@@ -30,6 +32,14 @@ func (g galileoParsePacket) Save() error {
 	}
 
 	fmt.Println(string(result))
+	
+	responseBody := bytes.NewBuffer(result) 
+	resp, err := http.Post("https://tracking.gypsick.com/api/v1/log", "application/json", responseBody)  
+
+	if err != nil {
+		return fmt.Errorf("Ошибка парсинга данных: %v", err)
+	}
+
 	return err
 }
 
